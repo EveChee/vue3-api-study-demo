@@ -3,9 +3,12 @@
     <p @click="str += 'p'">我是单值数据：{{ str }}</p>
     <p @click="arr.push(Math.random())">我是数组数据：{{ arr }}</p>
     <p @click="arrdInner.app.haha++">我是深度数组数据：num-{{ arrdInner.num }} other-{{ arrdInner.other }}</p>
+    <p @click="val.abc.age++">我是逻辑抽离数据：age-{{ val.abc.age }}</p>
+    <p @click="locasVal.abc.momoda[0]++">我是逻辑抽离数据：momoda[0]-{{ locasVal.abc.momoda[0] }}</p>
 </template>
 <script lang="ts">
 import { defineComponent, reactive, ref, watch, watchEffect } from "vue";
+import useServer, { ServerCallback } from '../../common/composition/useServer'
 const origin = {
     age: 17
 }
@@ -94,15 +97,25 @@ export default defineComponent({
         }
         */
         // initial run
-        
+
         watchEffect(() => {
             console.log('我是watchEffect，我会直接执行，然后变化再执行', arrdInner.app.haha)
+        })
+        const locas = reactive({abc:{momoda:[123]}})
+        const okb = { abc: origin }
+        const [val, stopWatchVal] = useServer(okb, (value) => {
+            console.log('我是okbUseServe的回调：', value.abc.age)
+        })
+        const [locasVal, stopWatchLocasVal] = useServer(locas, (value) => {
+            console.log('我是locasUseServe的回调：', value.abc.momoda[0])
         })
         return {
             target,
             str,
             arr,
-            arrdInner
+            arrdInner,
+            val,
+            locasVal
         }
     }
 })
