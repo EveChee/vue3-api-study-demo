@@ -9,7 +9,7 @@ export default function useServer<T = object>(val:T, cb:(value:T) => ServerLink 
         return [val, () => {}]
     }
     const isReact = isReactive(val) || isRef(val)
-    const reactiveVal = isReact ? val : typeof val === 'object' ? reactive(val as T extends object) : ref(val)
+    const reactiveVal = isReact ? val : typeof val === 'object' ? reactive(val as Object) : ref(val)
     const stop = watchEffect((onInvalidate) => {
         const token = cb(reactiveVal as T)
         onInvalidate(() => token?.cancel && token.cancel())
