@@ -26,6 +26,7 @@
   <!--  -->
   <TestRef></TestRef>
   <TestReactive></TestReactive>
+  <TestWatch></TestWatch>
 </template>
 
 <script lang="ts">
@@ -43,6 +44,7 @@ import TestDirective from "./components/Test/TestDirective.vue";
 import TestChildHooks from "./components/Test/TestChildHooks.vue";
 import TestRef from "./components/Composition/TestRef.vue";
 import TestReactive from "./components/Composition/TestReactive.vue";
+import TestWatch from "./components/Composition/TestWatch.vue";
 export default defineComponent({
   name: "App",
   data() {
@@ -67,6 +69,7 @@ export default defineComponent({
     TestChildHooks,
     TestRef,
     TestReactive,
+    TestWatch,
   },
   methods: {
     seeEmit(opt: any) {
